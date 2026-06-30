@@ -16,7 +16,7 @@ resource "aws_instance" "bastion" {
 
       tags = merge(
         {
-            Name = "local.common_name-bastion"
+            Name = "${local.common_name}-bastion"
         },
         local.common_tags
       )
@@ -24,7 +24,7 @@ resource "aws_instance" "bastion" {
 
     tags = merge(
         {
-            Name = "local.common_name-bastion"
+            Name = "${local.common_name}-bastion"
         },
         local.common_tags
       )
