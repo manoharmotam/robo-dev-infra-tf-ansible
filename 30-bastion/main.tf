@@ -3,7 +3,7 @@ resource "aws_instance" "bastion" {
     instance_type = local.instance_type
     vpc_security_group_ids = [local.security_group]
     subnet_id = local.subnet_id
-
+    key_name = "ami2"
     user_data = templatefile("${path.module}/bootstrap.sh.tftpl", {
         partition_number = 4
         extend_size = 30
