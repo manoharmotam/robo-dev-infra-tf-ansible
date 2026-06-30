@@ -4,6 +4,7 @@ resource "aws_instance" "bastion" {
     vpc_security_group_ids = [local.security_group]
     subnet_id = local.subnet_id
     key_name = "ami2"
+    iam_instance_profile = aws_iam_instance_profile.bastion.name
     user_data = templatefile("${path.module}/bootstrap.sh.tftpl", {
         partition_number = 4
         extend_size = 30
