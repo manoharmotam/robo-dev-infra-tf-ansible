@@ -9,3 +9,8 @@ variable "environment" {
 variable "bastion_tags" {
  default = {}
 }
+
+variable "instance_type" {
+  default = "t3.micro"
+}
+
