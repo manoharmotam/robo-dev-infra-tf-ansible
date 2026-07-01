@@ -13,6 +13,5 @@ locals {
   mysql_sg_id    = data.aws_ssm_parameter.mysql_sg_id.value
   rabbitmq_sg_id = data.aws_ssm_parameter.rabbitmq_sg_id.value
   subnet_id      = split(",", data.aws_ssm_parameter.subnet_ids.value)[0]
-  #   policy_arn           = data.aws_iam_policy.iam_policy.arn
-  #   iam_instance_profile = aws_iam_instance_profile.bastion.role
+  iam_instance_profile = aws_iam_instance_profile.mysql.role
 }
