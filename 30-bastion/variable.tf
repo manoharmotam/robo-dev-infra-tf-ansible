@@ -1,4 +1,4 @@
-variable "project"{
+variable "project" {
   default = "mrmotam"
 }
 
@@ -7,7 +7,7 @@ variable "environment" {
 }
 
 variable "bastion_tags" {
- default = {}
+  default = {}
 }
 
 variable "instance_type" {

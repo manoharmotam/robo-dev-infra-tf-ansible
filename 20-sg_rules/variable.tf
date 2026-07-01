@@ -6,16 +6,16 @@ variable "environment" {
   default = "dev"
 }
 
-variable "mongodb"{
-    default = "27017"
+variable "mongodb" {
+  default = "27017"
 }
 
-variable "redis"{
-    default = "6379"
+variable "redis" {
+  default = "6379"
 }
 
-variable "mysql"{
-    default = "3306"
+variable "mysql" {
+  default = "3306"
 }
 
 variable "rabbitmq" {

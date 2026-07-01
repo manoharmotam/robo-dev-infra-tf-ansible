@@ -1,14 +1,14 @@
 variable "project" {
-    default = "mrmotam"
+  default = "mrmotam"
 }
 
 variable "environment" {
-    default = "dev"
+  default = "dev"
 }
 
 variable "instance_type" {
-    default = "t3.micro"
+  default = "t3.micro"
 }
- variable "ec2_tags" {
-    default = {}
- }
+variable "ec2_tags" {
+  default = {}
+}
