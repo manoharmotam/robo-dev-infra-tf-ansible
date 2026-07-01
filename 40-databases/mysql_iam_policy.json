@@ -1,0 +1,14 @@
+{
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Sid": "VisualEditor0",
+			"Effect": "Allow",
+			"Action": [
+				"ssm:DescribeParameters",
+				"ssm:GetParameters"
+			],
+			"Resource": "arn:aws:ssm:us-east-1:316502579093:parameter/mrmotam/dev/mysql_password"
+		}
+	]
+}
