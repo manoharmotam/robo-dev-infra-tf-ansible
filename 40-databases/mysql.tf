@@ -5,11 +5,10 @@ resource "aws_instance" "mysql" {
   subnet_id              = local.subnet_id
   iam_instance_profile = local.iam_instance_profile
   tags = merge(
-    var.ec2_tags,
+    var.ec2_tags, local.common_tags,
     {
-      Name = "${local.common_name}-rabbitmq"
-    },
-    local.common_tags
+      Name = "${local.common_name}-mysql"
+    }
   )
 }
 

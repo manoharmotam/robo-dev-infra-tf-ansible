@@ -5,11 +5,10 @@ resource "aws_instance" "redis" {
   subnet_id              = local.subnet_id
 
   tags = merge(
-    var.ec2_tags,
+    var.ec2_tags, local.common_tags,
     {
       Name = "${local.common_name}-redis"
-    },
-    local.common_tags
+    }
   )
 }
 
