@@ -12,3 +12,7 @@ variable "instance_type" {
 variable "ec2_tags" {
   default = {}
 }
+
+variable "mysql_password" {
+  type = string
+}
