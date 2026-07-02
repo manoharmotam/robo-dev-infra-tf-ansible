@@ -14,4 +14,6 @@ locals {
   rabbitmq_sg_id = data.aws_ssm_parameter.rabbitmq_sg_id.value
   subnet_id      = split(",", data.aws_ssm_parameter.subnet_ids.value)[0]
   iam_instance_profile = aws_iam_instance_profile.mysql.name
+
+  domain_name = "${var.project}.online"
 }
