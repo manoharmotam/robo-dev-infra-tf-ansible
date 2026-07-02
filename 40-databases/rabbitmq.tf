@@ -12,16 +12,16 @@ resource "aws_instance" "rabbitmq" {
   )
 }
 
-resource "terraform_data" "mysql" {
+resource "terraform_data" "rabbitmq" {
   triggers_replace = [
-    aws_instance.mysql.id
+    aws_instance.rabbitmq.id
   ]
 
   connection {
     port     = 22
     user     = "ec2-user"
     password = "DevOps321"
-    host     = aws_instance.mysql.private_ip
+    host     = aws_instance.rabbitmq.private_ip
   }
 
   provisioner "file" {
@@ -32,7 +32,7 @@ resource "terraform_data" "mysql" {
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/bootstrap.sh",
-      "sudo sh /tmp/bootstrap.sh mysql ${var.environment}"
+      "sudo sh /tmp/bootstrap.sh rabbitMQ ${var.environment}"
     ]
   }
 }
