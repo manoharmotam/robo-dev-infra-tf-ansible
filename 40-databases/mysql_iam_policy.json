@@ -4,11 +4,14 @@
 		{
 			"Sid": "VisualEditor0",
 			"Effect": "Allow",
-			"Action": [
-				"ssm:DescribeParameters",
-				"ssm:GetParameters"
-			],
+			"Action": "ssm:GetParameter",
 			"Resource": "arn:aws:ssm:us-east-1:316502579093:parameter/mrmotam/dev/mysql_password"
+		},
+		{
+			"Sid": "VisualEditor1",
+			"Effect": "Allow",
+			"Action": "ssm:DescribeParameters",
+			"Resource": "*"
 		}
 	]
 }
