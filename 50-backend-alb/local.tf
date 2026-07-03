@@ -8,7 +8,6 @@ locals {
   }
   subnet_ids     = data.aws_ssm_parameter.private_subnet_ids.value
   backend_lb_sg_id = data.aws_ssm_parameter.lb_sg.value
-  backend_lb_listener_arn = aws_ssm_parameter.backend_lb_listener_arn.arn
-
+  backend_lb_listener_arn = aws_lb_listener.http.arn
   domain_name = "${var.project}.online"
 }
