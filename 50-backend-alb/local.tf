@@ -6,7 +6,7 @@ locals {
     Name         = "${local.common_name}"
     "Managed by" = "Terraform"
   }
-  subnet_ids     = data.aws_ssm_parameter.private_subnet_ids.value
+  subnet_ids     = split(",", data.aws_ssm_parameter.private_subnet_ids.value)
   backend_lb_sg_id = data.aws_ssm_parameter.lb_sg.value
   backend_lb_arn = aws_lb.backend-lb.arn
   domain_name = "${var.project}.online"
