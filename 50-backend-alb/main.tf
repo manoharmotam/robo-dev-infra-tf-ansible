@@ -16,7 +16,7 @@ resource "aws_lb" "backend-lb" {
 }
 
 resource "aws_lb_listener" "http" {
-    load_balancer_arn = local.backend_lb_listener_arn
+    load_balancer_arn = local.backend_lb_arn
     port = "80"
     protocol = "HTTP"
 
