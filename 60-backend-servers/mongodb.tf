@@ -1,7 +1,7 @@
-resource "aws_instance" "mongodb" {
+resource "aws_instance" "catalogue" {
   ami                    = local.ami_id
   instance_type          = local.instance_type
-  vpc_security_group_ids = [local.mongodb_sg_id]
+  vpc_security_group_ids = [local.catalogue_sg_id]
   subnet_id              = local.subnet_id
 
   tags = merge(
