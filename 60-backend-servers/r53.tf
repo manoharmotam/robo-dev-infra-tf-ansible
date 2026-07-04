@@ -1,36 +1,36 @@
-resource "aws_route53_record" "cata" {
+resource "aws_route53_record" "catalogue" {
   zone_id = var.zone_id
-  name    = "mongodb-${var.environment}.${local.domain_name}"
+  name    = "catalogue-${var.environment}.${local.domain_name}"
   type    = "A"
   ttl     = 1
-  records = [aws_instance.mongodb.private_ip]
+  records = [aws_instance.catalogue.private_ip]
   allow_overwrite = true
 }
 
-resource "aws_route53_record" "redis" {
+resource "aws_route53_record" "user" {
   zone_id = var.zone_id
-  name    = "redis-${var.environment}.${local.domain_name}"
+  name    = "user-${var.environment}.${local.domain_name}"
   type    = "A"
   ttl     = 1
-  records = [aws_instance.redis.private_ip]
+  records = [aws_instance.user.private_ip]
   allow_overwrite = true
 }
 
-resource "aws_route53_record" "mysql" {
+resource "aws_route53_record" "cart" {
   zone_id = var.zone_id
-  name    = "mysql-${var.environment}.${local.domain_name}"
+  name    = "cart-${var.environment}.${local.domain_name}"
   type    = "A"
   ttl     = 1
-  records = [aws_instance.mysql.private_ip]
+  records = [aws_instance.cart.private_ip]
   allow_overwrite = true
 }
 
-resource "aws_route53_record" "rabbitmq" {
+resource "aws_route53_record" "shipping" {
   zone_id = var.zone_id
-  name    = "rabbitmq-${var.environment}.${local.domain_name}"
+  name    = "shipping-${var.environment}.${local.domain_name}"
   type    = "A"
   ttl     = 1
-  records = [aws_instance.rabbitmq.private_ip]
+  records = [aws_instance.shipping.private_ip]
   allow_overwrite = true
 }
 
@@ -39,6 +39,6 @@ resource "aws_route53_record" "payment" {
   name    = "payment-${var.environment}.${local.domain_name}"
   type    = "A"
   ttl     = 1
-  records = [aws_instance.rabbitmq.private_ip]
+  records = [aws_instance.payment.private_ip]
   allow_overwrite = true
 }

@@ -13,10 +13,6 @@ variable "ec2_tags" {
   default = {}
 }
 
-variable "mysql_password" {
-  type = string
-}
-
 variable "zone_id" {
   default = "Z00263282318BT9FBW1XK"
 }
