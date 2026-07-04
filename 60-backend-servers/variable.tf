@@ -17,3 +17,6 @@ variable "zone_id" {
   default = "Z00263282318BT9FBW1XK"
 }
 
+variable "app_version" {
+  default = "v3"
+}
