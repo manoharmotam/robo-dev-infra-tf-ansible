@@ -1,4 +1,4 @@
-resource "aws_route53_record" "mongodb" {
+resource "aws_route53_record" "cata" {
   zone_id = var.zone_id
   name    = "mongodb-${var.environment}.${local.domain_name}"
   type    = "A"
