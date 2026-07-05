@@ -178,5 +178,29 @@ resource "aws_autoscaling_policy" "catalogue" {
 }
 
 resource "aws_lb_listener_rule" "catalogue" {
-  listener_arn = local.back
+  listener_arn = local.backend_lb_listener_arn
+  priority = 10
+
+  action {
+    type = "forward"
+    target_group_arn = aws_lb_target_group.catalogue.arn
+  }
+
+  condition {
+    host_header {
+      values = ["catalogue.backend-lb-${var.environment}.${local.domain_name}"]
+    }
+  }
+}
+
+resource "terraform_data" "catalogue_delete" {
+  triggers_replace = [
+    aws_instance.catalogue.id
+  ]
+
+  depends_on = [ aws_autoscaling_policy.catalogue ]
+
+  provisioner "local-exec" {
+    command = "aws ec2 terminate-instances  --instance-ids ${aws_instance.catalogue.id}"
+  }
 }
