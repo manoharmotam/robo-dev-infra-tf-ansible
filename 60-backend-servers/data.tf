@@ -51,3 +51,7 @@ data "aws_ssm_parameter" "subnet_ids" {
 data "aws_ssm_parameter" "vpc_id" {
   name = "/${var.project}/${var.environment}/vpc_id"
 }
+
+data "aws_ssm_parameter" "backend_lb_listener_arn" {
+    name = "/${var.project}/${var.environment}/backend_alb_listener_arn"
+}
