@@ -59,3 +59,61 @@ resource "aws_ami_from_instance" "catalogue" {
   )
 }
 
+resource "aws_launch_template" "catalogue" {
+  name = "${local.common_name}-catalogue"
+
+  image_id = aws_ami_from_instance.catalogue.id
+  instance_type = var.instance_type
+  vpc_security_group_ids = [local.catalogue_sg_id]
+  update_default_version = true
+
+  tag_specifications {
+    resource_type = "instance"
+    tags = merge(
+      local.common_tags, 
+      {
+        Name = "${local.common_name}-catalogue-${var.app_version}-${aws_instance.catalogue.id}"
+
+      }
+    )
+  }
+
+  tag_specifications {
+    resource_type = "volume"
+    tags = merge(
+      local.common_tags, 
+      {
+        Name = "${local.common_name}-catalogue-${var.app_version}-${aws_instance.catalogue.id}"
+
+      }
+    )    
+  }
+
+    tags = merge(
+    local.common_tags, 
+    {
+      Name = "${local.common_name}-catalogue-${var.app_version}-${aws_instance.catalogue.id}"
+
+    }
+  )
+}
+
+
+resource "aws_lb_target_group" "catalogue" {
+  name = "${local.common_name}-catalogue"
+  port = 8080
+  protocol = "HTTP"
+  vpc_id = local.vpc_id
+  deregistration_delay = 30
+
+  health_check {
+    protocol = "HTTP"
+    path = "/health"
+    healthy_threshold = 2
+    unhealthy_threshold = 2
+    timeout = 5
+    interval = 10
+    port = 8080
+    matcher = "200-299"
+  }
+}

@@ -48,6 +48,6 @@ data "aws_ssm_parameter" "subnet_ids" {
 }
 
 
-# data "aws_iam_policy" "name" {
-  
-# }
+data "aws_ssm_parameter" "vpc_id" {
+  name = "/${var.project}/${var.environment}/vpc_id"
+}
