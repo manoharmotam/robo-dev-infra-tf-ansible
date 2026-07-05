@@ -15,7 +15,7 @@ locals {
   payment_sg_id     = data.aws_ssm_parameter.payment_sg_id.value
   private_subnet_id = split(",", data.aws_ssm_parameter.subnet_ids.value)[0]
   vpc_id            = data.aws_ssm_parameter.vpc_id.value
-  backend_lb_listener_arn = data.aws_ssm_parameter.backend_lb_listener_arn
+  backend_lb_listener_arn = data.aws_ssm_parameter.backend_lb_listener_arn.value
 
   domain_name = "${var.project}.online"
 }
