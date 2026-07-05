@@ -179,7 +179,7 @@ resource "aws_autoscaling_policy" "cart" {
 
 resource "aws_lb_listener_rule" "cart" {
   listener_arn = local.backend_lb_listener_arn
-  priority = 10
+  priority = 30
 
   action {
     type = "forward"

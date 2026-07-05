@@ -179,7 +179,7 @@ resource "aws_autoscaling_policy" "shipping" {
 
 resource "aws_lb_listener_rule" "shipping" {
   listener_arn = local.backend_lb_listener_arn
-  priority = 10
+  priority = 40
 
   action {
     type = "forward"
