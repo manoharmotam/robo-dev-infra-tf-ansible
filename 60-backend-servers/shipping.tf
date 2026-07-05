@@ -32,7 +32,175 @@ resource "terraform_data" "shipping" {
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/bootstrap.sh",
-      "sudo sh /tmp/bootstrap.sh mongodb ${var.environment}"
+      "sudo sh /tmp/bootstrap.sh shipping ${var.environment}"
     ]
   }
 }
+
+#Stop the instance before taking AMI for image consistency
+resource "aws_ec2_instance_state" "shipping" {
+  instance_id = aws_instance.shipping.id
+  state       = "stopped"
+
+  depends_on = [aws_instance.shipping]
+}
+
+#Take AMI for the stopped instance
+resource "aws_ami_from_instance" "shipping" {
+  name               = "${local.common_name}-shipping-${var.environment}-${var.app_version}-${aws_instance.shipping.id}" #mrmotam-shipping-dev-v3-instance-id
+  source_instance_id = aws_instance.shipping.id
+  depends_on         = [aws_ec2_instance_state.shipping]
+
+  tags = merge(
+    local.common_tags,
+    {
+      Name = "${local.common_name}-shipping-${var.app_version}-${aws_instance.shipping.id}"
+    }
+  )
+}
+
+resource "aws_launch_template" "shipping" {
+  name = "${local.common_name}-shipping"
+
+  image_id               = aws_ami_from_instance.shipping.id
+  instance_type          = var.instance_type
+  vpc_security_group_ids = [local.shipping_sg_id]
+  update_default_version = true
+
+  tag_specifications {
+    resource_type = "instance"
+    tags = merge(
+      local.common_tags,
+      {
+        Name = "${local.common_name}-shipping-${var.app_version}-${aws_instance.shipping.id}"
+
+      }
+    )
+  }
+
+  tag_specifications {
+    resource_type = "volume"
+    tags = merge(
+      local.common_tags,
+      {
+        Name = "${local.common_name}-shipping-${var.app_version}-${aws_instance.shipping.id}"
+
+      }
+    )
+  }
+
+  tags = merge(
+    local.common_tags,
+    {
+      Name = "${local.common_name}-shipping-${var.app_version}-${aws_instance.shipping.id}"
+
+    }
+  )
+}
+
+
+resource "aws_lb_target_group" "shipping" {
+  name                 = "${local.common_name}-shipping"
+  port                 = 8080
+  protocol             = "HTTP"
+  vpc_id               = local.vpc_id
+  deregistration_delay = 30
+
+  health_check {
+    protocol            = "HTTP"
+    path                = "/health"
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    timeout             = 5
+    interval            = 10
+    port                = 8080
+    matcher             = "200-299"
+  }
+}
+
+resource "aws_autoscaling_group" "shipping" {
+  name = "${local.common_name}-shipping"
+  max_size = 10
+  min_size = 1
+  desired_capacity = 2
+  health_check_grace_period = 120
+  health_check_type =  "ELB"
+  force_delete = false
+
+  launch_template {
+    id = aws_launch_template.shipping.id
+    version = "$Latest"
+  }
+
+  vpc_zone_identifier = [local.private_subnet_id]
+
+  target_group_arns = [aws_lb_target_group.shipping.arn]
+  
+  instance_refresh {
+    strategy = "Rolling"
+    preferences {
+      min_healthy_percentage = 50
+    }
+    triggers = [ "launch_template" ]
+  }
+
+  dynamic "tag" {
+    for_each = merge(
+      local.common_tags,
+      {
+        Name = "${local.common_name}-shipping"
+      }
+    )
+    content {
+      key = tag.key
+      value = tag.value
+      propagate_at_launch = true
+    }
+  }
+
+  timeouts {
+    delete = "15m"
+  }
+}
+
+resource "aws_autoscaling_policy" "shipping" {
+  autoscaling_group_name = aws_autoscaling_group.shipping.name
+  name = "${local.common_name}-shipping"
+  policy_type = "TargetTrackingScaling"
+
+  estimated_instance_warmup = 120
+  target_tracking_configuration {
+    predefined_metric_specification {
+      predefined_metric_type = "ASGAverageCPUUtilization"
+    }
+    target_value = 75.0
+  }
+}
+
+resource "aws_lb_listener_rule" "shipping" {
+  listener_arn = local.backend_lb_listener_arn
+  priority = 10
+
+  action {
+    type = "forward"
+    target_group_arn = aws_lb_target_group.shipping.arn
+  }
+
+  condition {
+    host_header {
+      values = ["shipping.backend-lb-${var.environment}.${local.domain_name}"]
+    }
+  }
+}
+
+# resource "terraform_data" "shipping_delete" {
+#   triggers_replace = [
+#     aws_instance.shipping.id
+#   ]
+
+#   depends_on = [ aws_autoscaling_policy.shipping ]
+
+#   provisioner "local-exec" {
+#     command = "aws ec2 terminate-instances  --instance-ids ${aws_instance.shipping.id}"
+#   }
+# }
