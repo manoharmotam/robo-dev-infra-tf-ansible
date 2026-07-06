@@ -119,29 +119,29 @@ resource "aws_lb_target_group" "payment" {
 }
 
 resource "aws_autoscaling_group" "payment" {
-  name = "${local.common_name}-payment"
-  max_size = 10
-  min_size = 1
-  desired_capacity = 2
+  name                      = "${local.common_name}-payment"
+  max_size                  = 10
+  min_size                  = 1
+  desired_capacity          = 2
   health_check_grace_period = 120
-  health_check_type =  "ELB"
-  force_delete = false
+  health_check_type         = "ELB"
+  force_delete              = false
 
   launch_template {
-    id = aws_launch_template.payment.id
+    id      = aws_launch_template.payment.id
     version = "$Latest"
   }
 
   vpc_zone_identifier = [local.private_subnet_id]
 
   target_group_arns = [aws_lb_target_group.payment.arn]
-  
+
   instance_refresh {
     strategy = "Rolling"
     preferences {
       min_healthy_percentage = 50
     }
-    triggers = [ "launch_template" ]
+    triggers = ["launch_template"]
   }
 
   dynamic "tag" {
@@ -152,8 +152,8 @@ resource "aws_autoscaling_group" "payment" {
       }
     )
     content {
-      key = tag.key
-      value = tag.value
+      key                 = tag.key
+      value               = tag.value
       propagate_at_launch = true
     }
   }
@@ -165,8 +165,8 @@ resource "aws_autoscaling_group" "payment" {
 
 resource "aws_autoscaling_policy" "payment" {
   autoscaling_group_name = aws_autoscaling_group.payment.name
-  name = "${local.common_name}-payment"
-  policy_type = "TargetTrackingScaling"
+  name                   = "${local.common_name}-payment"
+  policy_type            = "TargetTrackingScaling"
 
   estimated_instance_warmup = 120
   target_tracking_configuration {
@@ -179,10 +179,10 @@ resource "aws_autoscaling_policy" "payment" {
 
 resource "aws_lb_listener_rule" "payment" {
   listener_arn = local.backend_lb_listener_arn
-  priority = 50
+  priority     = 50
 
   action {
-    type = "forward"
+    type             = "forward"
     target_group_arn = aws_lb_target_group.payment.arn
   }
 

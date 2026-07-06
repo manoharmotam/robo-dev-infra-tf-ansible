@@ -3,7 +3,7 @@ resource "aws_instance" "mysql" {
   instance_type          = local.instance_type
   vpc_security_group_ids = [local.mysql_sg_id]
   subnet_id              = local.subnet_id
-  iam_instance_profile = local.iam_instance_profile
+  iam_instance_profile   = local.iam_instance_profile
   tags = merge(
     var.ec2_tags, local.common_tags,
     {

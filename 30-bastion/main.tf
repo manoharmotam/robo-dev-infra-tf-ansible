@@ -9,10 +9,10 @@ resource "aws_instance" "bastion" {
     extend_size      = 30
   })
   tags = merge(
-      local.common_tags, 
-        {
-          Name = "${local.common_name}-bastion"
-        }   
+    local.common_tags,
+    {
+      Name = "${local.common_name}-bastion"
+    }
   )
 
   root_block_device {

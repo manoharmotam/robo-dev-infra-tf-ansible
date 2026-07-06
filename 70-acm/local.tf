@@ -1,5 +1,5 @@
 locals {
-    common_tags = {
+  common_tags = {
     Project      = "${var.project}"
     Environment  = "${var.environment}"
     "Managed by" = "Terraform"
