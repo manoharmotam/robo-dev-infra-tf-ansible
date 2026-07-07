@@ -13,4 +13,4 @@ cd /home/ec2-user
 git clone https://github.com/manoharmotam/ansible-dev-tf-integration.git
 cd ansible-dev-tf-integration
 git pull 2> /dev/null
-ansible-playbook -e component="$COMPONENT" -e ENVIRONMENT="$ENVIRONMENT" robo.yml
+ansible-playbook -e component="$COMPONENT" -e env="$ENVIRONMENT" robo.yml
