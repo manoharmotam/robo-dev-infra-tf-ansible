@@ -42,7 +42,7 @@ resource "aws_ec2_instance_state" "frontend" {
   instance_id = aws_instance.frontend.id
   state       = "stopped"
 
-  depends_on = [aws_instance.frontend]
+  depends_on = [terraform_data.frontend]
 }
 
 #Take AMI for the stopped instance
