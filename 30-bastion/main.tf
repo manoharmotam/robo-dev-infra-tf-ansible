@@ -21,10 +21,10 @@ resource "aws_instance" "bastion" {
     volume_type           = "gp3"
 
     tags = merge(
+      local.common_tags,
       {
         Name = "${local.common_name}-bastion"
-      },
-      local.common_tags
+      } 
     )
   }
 
