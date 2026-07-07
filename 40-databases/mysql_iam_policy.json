@@ -5,7 +5,7 @@
 			"Sid": "VisualEditor0",
 			"Effect": "Allow",
 			"Action": "ssm:GetParameter",
-			"Resource": "arn:aws:ssm:us-east-1:316502579093:parameter/mrmotam/dev/mysql_password"
+			"Resource": "arn:aws:ssm:us-east-1:637452053609:parameter/mrmotam/dev/mysql_password"
 		},
 		{
 			"Sid": "VisualEditor1",
