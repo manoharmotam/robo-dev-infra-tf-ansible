@@ -17,8 +17,6 @@ resource "terraform_data" "catalogue" {
     aws_instance.catalogue.id
   ]
 
-  depends_on = [ aws_ami_from_instance.catalogue ]
-
   connection {
     type = "ssh"
     user     = "ec2-user"
@@ -44,7 +42,7 @@ resource "aws_ec2_instance_state" "catalogue" {
   instance_id = aws_instance.catalogue.id
   state       = "stopped"
 
-  depends_on = [aws_instance.catalogue]
+  depends_on = [terraform_data.catalogue]
 }
 
 #Take AMI for the stopped instance
