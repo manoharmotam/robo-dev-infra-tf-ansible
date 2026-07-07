@@ -17,6 +17,8 @@ resource "terraform_data" "catalogue" {
     aws_instance.catalogue.id
   ]
 
+  depends_on = [ aws_ami_from_instance.catalogue ]
+
   connection {
     type = "ssh"
     user     = "ec2-user"
