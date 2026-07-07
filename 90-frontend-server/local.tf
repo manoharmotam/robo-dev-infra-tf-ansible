@@ -8,14 +8,10 @@ locals {
   }
   ami_id                  = data.aws_ami.ami_id.id
   instance_type           = var.instance_type
-  catalogue_sg_id         = data.aws_ssm_parameter.catalogue_sg_id.value
-  user_sg_id              = data.aws_ssm_parameter.user_sg_id.value
-  cart_sg_id              = data.aws_ssm_parameter.cart_sg_id.value
-  shipping_sg_id          = data.aws_ssm_parameter.shipping_sg_id.value
-  payment_sg_id           = data.aws_ssm_parameter.payment_sg_id.value
-  private_subnet_id       = split(",", data.aws_ssm_parameter.subnet_ids.value)[0]
+  frontend_sg_id         = data.aws_ssm_parameter.frontend_sg_id.value
+  public_subnet_id       = split(",", data.aws_ssm_parameter.subnet_ids.value)[0]
   vpc_id                  = data.aws_ssm_parameter.vpc_id.value
-  backend_lb_listener_arn = data.aws_ssm_parameter.backend_lb_listener_arn.value
+  frontend_lb_listener_arn = data.aws_ssm_parameter.frontend_lb_listener_arn.value
 
   domain_name = "${var.project}.online"
 }

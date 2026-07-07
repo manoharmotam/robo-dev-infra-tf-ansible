@@ -1,22 +1,7 @@
-data "aws_ssm_parameter" "catalogue_sg_id" {
+data "aws_ssm_parameter" "frontend_sg_id" {
   name = "/${var.project}/${var.environment}/catalogue_sg_id"
 }
 
-data "aws_ssm_parameter" "user_sg_id" {
-  name = "/${var.project}/${var.environment}/user_sg_id"
-}
-
-data "aws_ssm_parameter" "cart_sg_id" {
-  name = "/${var.project}/${var.environment}/cart_sg_id"
-}
-
-data "aws_ssm_parameter" "shipping_sg_id" {
-  name = "/${var.project}/${var.environment}/shipping_sg_id"
-}
-
-data "aws_ssm_parameter" "payment_sg_id" {
-  name = "/${var.project}/${var.environment}/payment_sg_id"
-}
 
 data "aws_ami" "ami_id" {
   most_recent = true
@@ -52,6 +37,6 @@ data "aws_ssm_parameter" "vpc_id" {
   name = "/${var.project}/${var.environment}/vpc_id"
 }
 
-data "aws_ssm_parameter" "backend_lb_listener_arn" {
-  name = "/${var.project}/${var.environment}/backend_alb_listener_arn"
+data "aws_ssm_parameter" "frontend_lb_listener_arn" {
+  name = "/${var.project}/${var.environment}/frontend_alb_listener_arn"
 }
