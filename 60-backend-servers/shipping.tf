@@ -42,7 +42,7 @@ resource "aws_ec2_instance_state" "shipping" {
   instance_id = aws_instance.shipping.id
   state       = "stopped"
 
-  depends_on = [aws_instance.shipping]
+  depends_on = [terraform_data.shipping]
 }
 
 #Take AMI for the stopped instance
