@@ -18,7 +18,7 @@ resource "terraform_data" "catalogue" {
   ]
 
   connection {
-    port     = 22
+    type = "ssh"
     user     = "ec2-user"
     password = "DevOps321"
     host     = aws_instance.catalogue.private_ip
