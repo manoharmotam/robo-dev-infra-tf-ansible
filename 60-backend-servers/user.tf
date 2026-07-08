@@ -193,14 +193,14 @@ resource "aws_lb_listener_rule" "user" {
   }
 }
 
-# resource "terraform_data" "user_delete" {
-#   triggers_replace = [
-#     aws_instance.user.id
-#   ]
+resource "terraform_data" "user_delete" {
+  triggers_replace = [
+    aws_instance.user.id
+  ]
 
-#   depends_on = [ aws_autoscaling_policy.user ]
+  depends_on = [ aws_autoscaling_policy.user ]
 
-#   provisioner "local-exec" {
-#     command = "aws ec2 terminate-instances  --instance-ids ${aws_instance.user.id}"
-#   }
-# }
+  provisioner "local-exec" {
+    command = "aws ec2 terminate-instances  --instance-ids ${aws_instance.user.id}"
+  }
+}

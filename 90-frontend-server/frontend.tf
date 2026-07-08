@@ -193,14 +193,14 @@ resource "aws_lb_listener_rule" "frontend" {
   }
 }
 
-# resource "terraform_data" "frontend_delete" {
-#   triggers_replace = [
-#     aws_instance.frontend.id
-#   ]
+resource "terraform_data" "frontend_delete" {
+  triggers_replace = [
+    aws_instance.frontend.id
+  ]
 
-#   depends_on = [ aws_autoscaling_policy.frontend ]
+  depends_on = [ aws_autoscaling_policy.frontend ]
 
-#   provisioner "local-exec" {
-#     command = "aws ec2 terminate-instances  --instance-ids ${aws_instance.frontend.id}"
-#   }
-# }
+  provisioner "local-exec" {
+    command = "aws ec2 terminate-instances  --instance-ids ${aws_instance.frontend.id}"
+  }
+}

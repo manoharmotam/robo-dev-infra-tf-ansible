@@ -193,14 +193,14 @@ resource "aws_lb_listener_rule" "payment" {
   }
 }
 
-# resource "terraform_data" "payment_delete" {
-#   triggers_replace = [
-#     aws_instance.payment.id
-#   ]
+resource "terraform_data" "payment_delete" {
+  triggers_replace = [
+    aws_instance.payment.id
+  ]
 
-#   depends_on = [ aws_autoscaling_policy.payment ]
+  depends_on = [ aws_autoscaling_policy.payment ]
 
-#   provisioner "local-exec" {
-#     command = "aws ec2 terminate-instances  --instance-ids ${aws_instance.payment.id}"
-#   }
-# }
+  provisioner "local-exec" {
+    command = "aws ec2 terminate-instances  --instance-ids ${aws_instance.payment.id}"
+  }
+}

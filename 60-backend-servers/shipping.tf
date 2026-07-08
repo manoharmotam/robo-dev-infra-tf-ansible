@@ -193,14 +193,14 @@ resource "aws_lb_listener_rule" "shipping" {
   }
 }
 
-# resource "terraform_data" "shipping_delete" {
-#   triggers_replace = [
-#     aws_instance.shipping.id
-#   ]
+resource "terraform_data" "shipping_delete" {
+  triggers_replace = [
+    aws_instance.shipping.id
+  ]
 
-#   depends_on = [ aws_autoscaling_policy.shipping ]
+  depends_on = [ aws_autoscaling_policy.shipping ]
 
-#   provisioner "local-exec" {
-#     command = "aws ec2 terminate-instances  --instance-ids ${aws_instance.shipping.id}"
-#   }
-# }
+  provisioner "local-exec" {
+    command = "aws ec2 terminate-instances  --instance-ids ${aws_instance.shipping.id}"
+  }
+}

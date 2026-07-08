@@ -193,14 +193,14 @@ resource "aws_lb_listener_rule" "cart" {
   }
 }
 
-# resource "terraform_data" "cart_delete" {
-#   triggers_replace = [
-#     aws_instance.cart.id
-#   ]
+resource "terraform_data" "cart_delete" {
+  triggers_replace = [
+    aws_instance.cart.id
+  ]
 
-#   depends_on = [ aws_autoscaling_policy.cart ]
+  depends_on = [ aws_autoscaling_policy.cart ]
 
-#   provisioner "local-exec" {
-#     command = "aws ec2 terminate-instances  --instance-ids ${aws_instance.cart.id}"
-#   }
-# }
+  provisioner "local-exec" {
+    command = "aws ec2 terminate-instances  --instance-ids ${aws_instance.cart.id}"
+  }
+}
