@@ -188,7 +188,7 @@ resource "aws_lb_listener_rule" "frontend" {
 
   condition {
     host_header {
-      values = ["${var.environment}.${local.domain_name}"]
+      values = ["${var.project}-${var.environment}.${local.domain_name}"]
     }
   }
 }
