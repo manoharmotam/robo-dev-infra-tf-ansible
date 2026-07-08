@@ -32,7 +32,7 @@ resource "terraform_data" "cart" {
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/bootstrap.sh",
-      "sudo sh /tmp/bootstrap.sh cart ${var.environment}"
+      "sudo sh /tmp/bootstrap.sh cart ${var.environment} ${var.app_version}"
     ]
   }
 }

@@ -32,7 +32,7 @@ resource "terraform_data" "payment" {
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/bootstrap.sh",
-      "sudo sh /tmp/bootstrap.sh payment ${var.environment}"
+      "sudo sh /tmp/bootstrap.sh payment ${var.environment} ${var.app_version}"
     ]
   }
 }

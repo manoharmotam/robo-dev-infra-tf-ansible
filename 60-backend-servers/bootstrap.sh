@@ -2,6 +2,7 @@
 
 COMPONENT=$1
 ENVIRONMENT=$2
+APP_VERSION=$3
 
 dnf install ansible -y
 mkdir -p /var/log/mrmotam
@@ -13,4 +14,4 @@ cd /home/ec2-user
 git clone https://github.com/manoharmotam/ansible-dev-tf-integration.git
 cd ansible-dev-tf-integration
 git pull 2> /dev/null
-ansible-playbook -e component="$COMPONENT" -e env="$ENVIRONMENT" robo.yml
+ansible-playbook -e component="$COMPONENT" -e env="$ENVIRONMENT" -e app_version="$APP_VERSION" robo.yml

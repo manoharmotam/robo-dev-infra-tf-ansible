@@ -1,6 +1,6 @@
 resource "aws_lb" "frontend-lb" {
   name               = "frontend-alb"
-  internal           = true
+  internal           = false
   load_balancer_type = "application"
   security_groups    = [local.frontend_lb_sg_id]
   subnets            = local.subnet_ids
@@ -15,7 +15,7 @@ resource "aws_lb" "frontend-lb" {
   )
 }
 
-resource "aws_lb_listener" "http" {
+resource "aws_lb_listener" "https" {
   load_balancer_arn = local.frontend_lb_arn
   port              = "443"
   protocol          = "HTTPS"

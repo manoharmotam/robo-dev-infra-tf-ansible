@@ -32,7 +32,7 @@ resource "terraform_data" "shipping" {
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/bootstrap.sh",
-      "sudo sh /tmp/bootstrap.sh shipping ${var.environment}"
+      "sudo sh /tmp/bootstrap.sh shipping ${var.environment} ${var.app_version}"
     ]
   }
 }
